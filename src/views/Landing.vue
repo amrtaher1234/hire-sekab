@@ -1,6 +1,6 @@
 <template>
   <div :style="getBackground" class="landing">
-    <div class="text-area">
+    <div :class="{up : showSkills}" class="text-area">
       <h1 :style="getTextColor">Amr Ahmed Taher...</h1>
 
       <h2 :style="getTextColor">{{belowText}}</h2>
@@ -43,7 +43,11 @@ h3 {
   display: flex;
   min-height: 100vh;
 }
+.text-area.up {
+  transform: translateY(-50%);
+}
 .text-area {
+  transition: all 0.5s linear;
   z-index: 500;
   text-align: center;
   margin: auto;
@@ -90,7 +94,7 @@ export default {
   },
   mounted: function() {
     this.canvas = document.getElementById("icanvas");
-    this.canvas.setAttribute("height", window.innerHeight + "px");
+    this.canvas.setAttribute("height", window.innerHeight  + "px");
     this.canvas.setAttribute("width", window.innerWidth + "px");
     this.ctx = this.canvas.getContext("2d");
     this.icons = this.icons.sort(() => Math.random() - 0.5);
@@ -108,6 +112,9 @@ export default {
     });
   },
   computed: {
+    getTextClass: function() {
+      return  this.showSkills ? 'up' : ''
+    },
     getTextColor() {
       return {
         color: this.showSkills ? "white" : "black"
